@@ -250,3 +250,4 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/CompareDatabases/CompareDatabasesSetup/Setup/CompareDatabases/CompareDatabasesSetup.exe
