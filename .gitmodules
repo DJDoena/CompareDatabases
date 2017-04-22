@@ -1,0 +1,9 @@
+[submodule "PluginInterface"]
+	path = PluginInterface
+	url = https://github.com/DJDoena/PluginInterface.git
+[submodule "DVDProfilerXML"]
+	path = DVDProfilerXML
+	url = https://github.com/DJDoena/DVDProfilerXML.git
+[submodule "ToolBox"]
+	path = ToolBox
+	url = https://github.com/DJDoena/ToolBox.git
