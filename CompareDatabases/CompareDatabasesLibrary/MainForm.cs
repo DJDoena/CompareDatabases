@@ -256,6 +256,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             if (TaskbarManager.IsPlatformSupported)
             {
                 TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
+                TaskbarManager.Instance.OwnerHandle = IntPtr.Zero;
             }
             if (this.ProgressWindow != null)
             {
