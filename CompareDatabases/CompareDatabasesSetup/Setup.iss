@@ -1,8 +1,8 @@
 [Setup]
 AppName=Compare DVD Profiler Databases
 AppId=CompareDatabases
-AppVerName=Compare DVD Profiler Databases 2.0.0.0
-AppCopyright=Copyright © Doena Soft. 2013 - 2015
+AppVerName=Compare DVD Profiler Databases 2.0.0.1
+AppCopyright=Copyright © Doena Soft. 2013 - 2017
 AppPublisher=Doena Soft.
 AppPublisherURL=http://doena-journal.net/en/dvd-profiler-tools/
 DefaultDirName={pf32}\Doena Soft.\CompareDatabases
@@ -20,9 +20,9 @@ WizardSmallImageFile=compiler:wizmodernsmallimage-is.bmp
 DisableReadyPage=yes
 ShowLanguageDialog=no
 VersionInfoCompany=Doena Soft.
-VersionInfoCopyright=2013 - 2015
+VersionInfoCopyright=2013 - 2017
 VersionInfoDescription=Compare DVD Profiler Databases Setup
-VersionInfoVersion=2.0.0.0
+VersionInfoVersion=2.0.0.1
 UninstallDisplayIcon={app}\djdsoft.ico
 
 [Languages]
@@ -66,12 +66,12 @@ Name: "{group}\Compare DVD Profiler Databases"; Filename: "{app}\CompareDatabase
 Name: "{userdesktop}\Compare DVD Profiler Databases"; Filename: "{app}\CompareDatabases.exe"; WorkingDir: "{app}"; IconFilename: "{app}\djdsoft.ico"
 
 [Run]
-Filename: "{win}\Microsoft.NET\Framework\v2.0.50727\RegAsm.exe"; Parameters: "/codebase ""{app}\CompareDatabasesPlugin.dll"""; Flags: runhidden
+Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/codebase ""{app}\CompareDatabasesPlugin.dll"""; Flags: runhidden
 
 ;[UninstallDelete]
 
 [UninstallRun]
-Filename: "{win}\Microsoft.NET\Framework\v2.0.50727\RegAsm.exe"; Parameters: "/u ""{app}\CompareDatabasesPlugin.dll"""; Flags: runhidden
+Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/u ""{app}\CompareDatabasesPlugin.dll"""; Flags: runhidden
 
 [Registry]
 ; Register - Cleanup ahead of time in case the user didn't uninstall the previous version.
@@ -88,13 +88,13 @@ Root: HKLM; Subkey: "Software\Classes\CLSID\{{01CD7B58-DD10-47D7-B15A-899431CF51
 Root: HKLM; Subkey: "Software\Classes\DoenaSoft.DVDProfiler.CompareDatabases.Plugin"; Flags: dontcreatekey uninsdeletekey
 
 [Code]
-function IsDotNET35Detected(): boolean;
-// Function to detect dotNet framework version 2.0
+function IsDotNET40Detected(): boolean;
+// Function to detect dotNet framework version 4.0
 // Returns true if it is available, false it's not.
 var
 dotNetStatus: boolean;
 begin
-dotNetStatus := RegKeyExists(HKLM, 'SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5');
+dotNetStatus := RegKeyExists(HKLM, 'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4');
 Result := dotNetStatus;
 end;
 
@@ -102,9 +102,9 @@ function InitializeSetup(): Boolean;
 // Called at the beginning of the setup package.
 begin
 
-if not IsDotNET35Detected then
+if not IsDotNET40Detected then
 begin
-MsgBox( 'The Microsoft .NET Framework version 3.5 is not installed. Please install it and try again.', mbInformation, MB_OK );
+MsgBox( 'The Microsoft .NET Framework version 4.0 is not installed. Please install it and try again.', mbInformation, MB_OK );
 Result := false;
 end
 else

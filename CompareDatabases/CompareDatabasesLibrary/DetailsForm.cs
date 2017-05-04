@@ -1,6 +1,4 @@
-﻿using DateTimePickerWithBackColor;
-using DoenaSoft.DVDProfiler.DVDProfilerXML.Version390;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -9,10 +7,13 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using DateTimePickerWithBackColor;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper;
+using DoenaSoft.DVDProfiler.DVDProfilerXML.Version390;
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
+    //[System.Runtime.InteropServices.ComVisible(false)]
     public partial class DetailsForm : Form
     {
         private DVD m_LeftDvd;
@@ -313,23 +314,16 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             if (CheckListInGeneral(leftIsNewer, leftDvd.TagList, rightDvd.TagList, leftTextBox, rightTextBox))
             {
-                Tags tags;
-                String leftTags;
-                String rightTags;
+                Tags tags = new Tags();
 
-                tags = new Tags();
                 tags.TagList = leftDvd.TagList;
-                using (StringWriter sw = new StringWriter())
-                {
-                    Tags.XmlSerializer.Serialize(sw, tags);
-                    leftTags = sw.ToString();
-                }
+
+                String leftTags = Serializer<Tags>.ToString(tags);
+
                 tags.TagList = rightDvd.TagList;
-                using (StringWriter sw = new StringWriter())
-                {
-                    Tags.XmlSerializer.Serialize(sw, tags);
-                    rightTags = sw.ToString();
-                }
+
+                String rightTags = Serializer<Tags>.ToString(tags);
+
                 CheckListSpecific(leftIsNewer, leftTags, rightTags, leftTextBox, rightTextBox);
             }
         }
@@ -338,23 +332,16 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             if (CheckListInGeneral(leftIsNewer, leftDvd.EventList, rightDvd.EventList, leftTextBox, rightTextBox))
             {
-                Events events;
-                String leftEvents;
-                String rightEvents;
+                Events events = new Events();
 
-                events = new Events();
                 events.EventList = leftDvd.EventList;
-                using (StringWriter sw = new StringWriter())
-                {
-                    CompareDatabases.Events.XmlSerializer.Serialize(sw, events);
-                    leftEvents = sw.ToString();
-                }
+
+                String leftEvents = Serializer<Events>.ToString(events);
+
                 events.EventList = rightDvd.EventList;
-                using (StringWriter sw = new StringWriter())
-                {
-                    CompareDatabases.Events.XmlSerializer.Serialize(sw, events);
-                    rightEvents = sw.ToString();
-                }
+
+                String rightEvents = Serializer<Events>.ToString(events);
+
                 CheckListSpecific(leftIsNewer, leftEvents, rightEvents, leftTextBox, rightTextBox);
             }
         }
@@ -590,10 +577,10 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 events = new Events();
                 leftFile = Path.GetTempFileName();
                 events.EventList = this.m_LeftDvd.EventList;
-                events.Serialize(leftFile);
+                Serializer<Events>.Serialize(leftFile, events);
                 rightFile = Path.GetTempFileName();
                 events.EventList = this.m_RightDvd.EventList;
-                events.Serialize(rightFile);
+                Serializer<Events>.Serialize(rightFile, events);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
         }
@@ -627,17 +614,20 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
             if (CheckWinMergeExistence(out fullPath))
             {
-                String leftFile;
-                String rightFile;
-                Tags tags;
+                Tags tags = new Tags();
 
-                tags = new Tags();
-                leftFile = Path.GetTempFileName();
-                tags.TagList = this.m_LeftDvd.TagList;
-                tags.Serialize(leftFile);
-                rightFile = Path.GetTempFileName();
-                tags.TagList = this.m_RightDvd.TagList;
-                tags.Serialize(rightFile);
+                String leftFile = Path.GetTempFileName();
+
+                tags.TagList = m_LeftDvd.TagList;
+
+                Serializer<Tags>.Serialize(leftFile, tags);
+
+                String rightFile = Path.GetTempFileName();
+
+                tags.TagList = m_RightDvd.TagList;
+
+                Serializer<Tags>.Serialize(rightFile, tags);
+
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
         }

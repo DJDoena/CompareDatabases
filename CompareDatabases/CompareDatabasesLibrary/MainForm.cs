@@ -1,17 +1,18 @@
-﻿using DoenaSoft.DVDProfiler.DVDProfilerHelper;
-using DoenaSoft.DVDProfiler.DVDProfilerXML.Version390;
-using Invelos.DVDProfilerPlugin;
-using Microsoft.WindowsAPICodePack.Taskbar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using DoenaSoft.DVDProfiler.DVDProfilerHelper;
+using DoenaSoft.DVDProfiler.DVDProfilerXML.Version390;
+using Invelos.DVDProfilerPlugin;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
+    //[System.Runtime.InteropServices.ComVisible(false)]
     public partial class MainForm : Form
     {
         private Settings Settings;

@@ -2,7 +2,8 @@
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
-    [Serializable()]
+    //[System.Runtime.InteropServices.ComVisible(false)]
+    [Serializable]
     public class DefaultValues
     {
         private String m_WinMergePath;
@@ -11,11 +12,10 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             get
             {
-                if (String.IsNullOrEmpty(this.m_WinMergePath))
+                if (String.IsNullOrEmpty(m_WinMergePath))
                 {
-                    String path;
+                    String path = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
 
-                    path = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
                     if (String.IsNullOrEmpty(path))
                     {
                         return (@"%ProgramFiles%\WinMerge\WinMergeU.exe");
@@ -25,11 +25,12 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                         return (@"%ProgramFiles(x86)%\WinMerge\WinMergeU.exe");
                     }
                 }
-                return (this.m_WinMergePath);
+
+                return (m_WinMergePath);
             }
             set
             {
-                this.m_WinMergePath = value;
+                m_WinMergePath = value;
             }
         }
     }

@@ -46,7 +46,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             {
                 try
                 {
-                    Settings = Settings.Deserialize(this.SettingsFile);
+                    Settings = Serializer<Settings>.Deserialize(SettingsFile);
                 }
                 catch(Exception ex)
                 {
@@ -64,7 +64,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             this.Api.UnregisterMenuItem(MenuTokenISCP);
             try
             {
-                Settings.Serialize(this.SettingsFile);
+                Serializer<Settings>.Serialize(SettingsFile, Settings);
             }
             catch(Exception ex)
             {
