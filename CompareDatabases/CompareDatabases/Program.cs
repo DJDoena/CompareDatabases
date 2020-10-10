@@ -70,7 +70,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             {
                 try
                 {
-                    Settings = Serializer<Settings>.Deserialize(SettingsFile);
+                    Settings = DVDProfilerSerializer<Settings>.Deserialize(SettingsFile);
                 }
                 catch (Exception ex)
                 {
@@ -84,7 +84,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             Application.Run(new MainForm(Settings, skipVersionCheck));
             try
             {
-                Serializer<Settings>.Serialize(SettingsFile, Settings);
+                DVDProfilerSerializer<Settings>.Serialize(SettingsFile, Settings);
             }
             catch(Exception ex)
             {

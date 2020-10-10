@@ -46,7 +46,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             {
                 try
                 {
-                    Settings = Serializer<Settings>.Deserialize(SettingsFile);
+                    Settings = DVDProfilerSerializer<Settings>.Deserialize(SettingsFile);
                 }
                 catch(Exception ex)
                 {
@@ -64,7 +64,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             this.Api.UnregisterMenuItem(MenuTokenISCP);
             try
             {
-                Serializer<Settings>.Serialize(SettingsFile, Settings);
+                DVDProfilerSerializer<Settings>.Serialize(SettingsFile, Settings);
             }
             catch(Exception ex)
             {
@@ -163,7 +163,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                         }
                         exceptionXml = new ExceptionXml(ex);
 
-                        Serializer<ExceptionXml>.Serialize(ErrorFile, exceptionXml);
+                        DVDProfilerSerializer<ExceptionXml>.Serialize(ErrorFile, exceptionXml);
                     }
                     catch(Exception inEx)
                     {

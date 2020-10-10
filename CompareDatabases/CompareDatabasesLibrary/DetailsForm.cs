@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using DateTimePickerWithBackColor;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper;
-using DoenaSoft.DVDProfiler.DVDProfilerXML.Version390;
+using DoenaSoft.DVDProfiler.DVDProfilerXML.Version400;
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
@@ -318,11 +318,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 tags.TagList = leftDvd.TagList;
 
-                String leftTags = Serializer<Tags>.ToString(tags);
+                String leftTags = DVDProfilerSerializer<Tags>.ToString(tags);
 
                 tags.TagList = rightDvd.TagList;
 
-                String rightTags = Serializer<Tags>.ToString(tags);
+                String rightTags = DVDProfilerSerializer<Tags>.ToString(tags);
 
                 CheckListSpecific(leftIsNewer, leftTags, rightTags, leftTextBox, rightTextBox);
             }
@@ -336,11 +336,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 events.EventList = leftDvd.EventList;
 
-                String leftEvents = Serializer<Events>.ToString(events);
+                String leftEvents = DVDProfilerSerializer<Events>.ToString(events);
 
                 events.EventList = rightDvd.EventList;
 
-                String rightEvents = Serializer<Events>.ToString(events);
+                String rightEvents = DVDProfilerSerializer<Events>.ToString(events);
 
                 CheckListSpecific(leftIsNewer, leftEvents, rightEvents, leftTextBox, rightTextBox);
             }
@@ -354,11 +354,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 ci.CrewList = leftList;
 
-                String leftInfo = Serializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
+                String leftInfo = DVDProfilerSerializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
 
                 ci.CrewList = rightList;
 
-                String rightInfo = Serializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
+                String rightInfo = DVDProfilerSerializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
 
                 CheckListSpecific(leftIsNewer, leftInfo, rightInfo, leftTextBox, rightTextBox);
             }
@@ -372,11 +372,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 ci.CastList = leftList;
 
-                String leftInfo = Serializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
+                String leftInfo = DVDProfilerSerializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
 
                 ci.CastList = rightList;
 
-                String rightInfo = Serializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
+                String rightInfo = DVDProfilerSerializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
 
                 CheckListSpecific(leftIsNewer, leftInfo, rightInfo, leftTextBox, rightTextBox);
             }
@@ -577,10 +577,10 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 events = new Events();
                 leftFile = Path.GetTempFileName();
                 events.EventList = this.m_LeftDvd.EventList;
-                Serializer<Events>.Serialize(leftFile, events);
+                DVDProfilerSerializer<Events>.Serialize(leftFile, events);
                 rightFile = Path.GetTempFileName();
                 events.EventList = this.m_RightDvd.EventList;
-                Serializer<Events>.Serialize(rightFile, events);
+                DVDProfilerSerializer<Events>.Serialize(rightFile, events);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
         }
@@ -620,13 +620,13 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 tags.TagList = m_LeftDvd.TagList;
 
-                Serializer<Tags>.Serialize(leftFile, tags);
+                DVDProfilerSerializer<Tags>.Serialize(leftFile, tags);
 
                 String rightFile = Path.GetTempFileName();
 
                 tags.TagList = m_RightDvd.TagList;
 
-                Serializer<Tags>.Serialize(rightFile, tags);
+                DVDProfilerSerializer<Tags>.Serialize(rightFile, tags);
 
                 StartWinMerge(fullPath, leftFile, rightFile);
             }

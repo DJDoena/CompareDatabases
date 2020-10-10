@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper;
-using DoenaSoft.DVDProfiler.DVDProfilerXML.Version390;
+using DoenaSoft.DVDProfiler.DVDProfilerXML.Version400;
 using Invelos.DVDProfilerPlugin;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
@@ -225,7 +225,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 try
                 {
-                    leftCollection = Serializer<Collection>.Deserialize(LeftFileTextBox.Text);
+                    leftCollection = DVDProfilerSerializer<Collection>.Deserialize(LeftFileTextBox.Text);
                 }
                 catch (Exception ex)
                 {
@@ -271,7 +271,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             this.OnlyRightiesListView.Items.Clear();
             try
             {
-                rightCollection = Serializer<Collection>.Deserialize(RightFileTextBox.Text);
+                rightCollection = DVDProfilerSerializer<Collection>.Deserialize(RightFileTextBox.Text);
             }
             catch (Exception ex)
             {
@@ -302,11 +302,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                     if (fullListLeft.TryGetValue(rightDvd.ID, out leftDvd))
                     {
-                        String leftInfo = Serializer<DVD>.ToString(leftDvd, DVD.DefaultEncoding);
+                        String leftInfo = DVDProfilerSerializer<DVD>.ToString(leftDvd, DVD.DefaultEncoding);
 
                         leftInfo = leftInfo.Replace("\r\n", "\n");
 
-                        String rightInfo = Serializer<DVD>.ToString(rightDvd, DVD.DefaultEncoding);
+                        String rightInfo = DVDProfilerSerializer<DVD>.ToString(rightDvd, DVD.DefaultEncoding);
 
                         rightInfo = rightInfo.Replace("\r\n", "\n");
 
@@ -400,7 +400,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 {
                     String xml = (String)(Invoke(new GetProfileDataDelegate(GetProfileData), allIds[i]));
 
-                    DVD dvd = Serializer<DVD>.FromString(xml, DVD.DefaultEncoding);
+                    DVD dvd = DVDProfilerSerializer<DVD>.FromString(xml, DVD.DefaultEncoding);
 
                     dvdList.Add(dvd);
 

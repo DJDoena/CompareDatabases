@@ -1,11 +1,11 @@
 [Setup]
 AppName=Compare DVD Profiler Databases
 AppId=CompareDatabases
-AppVerName=Compare DVD Profiler Databases 2.0.0.1
-AppCopyright=Copyright © Doena Soft. 2013 - 2017
+AppVerName=Compare DVD Profiler Databases 2.0.0.2
+AppCopyright=Copyright © Doena Soft. 2013 - 2020
 AppPublisher=Doena Soft.
 AppPublisherURL=http://doena-journal.net/en/dvd-profiler-tools/
-DefaultDirName={pf32}\Doena Soft.\CompareDatabases
+DefaultDirName={commonpf32}\Doena Soft.\CompareDatabases
 DefaultGroupName=Compare DVD Profiler Databases
 DirExistsWarning=No
 SourceDir=..\CompareDatabases\bin\x86\CompareDatabases
@@ -13,16 +13,16 @@ Compression=zip/9
 AppMutex=InvelosDVDPro
 OutputBaseFilename=CompareDatabasesSetup
 OutputDir=..\..\..\..\CompareDatabasesSetup\Setup\CompareDatabases
-MinVersion=0,5.1
+MinVersion=0,6.0
 PrivilegesRequired=admin
 WizardImageFile=compiler:wizmodernimage-is.bmp
 WizardSmallImageFile=compiler:wizmodernsmallimage-is.bmp
 DisableReadyPage=yes
 ShowLanguageDialog=no
 VersionInfoCompany=Doena Soft.
-VersionInfoCopyright=2013 - 2017
+VersionInfoCopyright=2013 - 2020
 VersionInfoDescription=Compare DVD Profiler Databases Setup
-VersionInfoVersion=2.0.0.1
+VersionInfoVersion=2.0.0.2
 UninstallDisplayIcon={app}\djdsoft.ico
 
 [Languages]
