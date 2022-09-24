@@ -2,7 +2,7 @@
 AppName=Compare DVD Profiler Databases
 AppId=CompareDatabases
 AppVerName=Compare DVD Profiler Databases 2.0.0.2
-AppCopyright=Copyright © Doena Soft. 2013 - 2020
+AppCopyright=Copyright © Doena Soft. 2013 - 2022
 AppPublisher=Doena Soft.
 AppPublisherURL=http://doena-journal.net/en/dvd-profiler-tools/
 DefaultDirName={commonpf32}\Doena Soft.\CompareDatabases
@@ -13,14 +13,13 @@ Compression=zip/9
 AppMutex=InvelosDVDPro
 OutputBaseFilename=CompareDatabasesSetup
 OutputDir=..\..\..\..\CompareDatabasesSetup\Setup\CompareDatabases
-MinVersion=0,6.0
+MinVersion=0,6.1sp1
 PrivilegesRequired=admin
-WizardImageFile=compiler:wizmodernimage-is.bmp
-WizardSmallImageFile=compiler:wizmodernsmallimage-is.bmp
+WizardStyle=modern
 DisableReadyPage=yes
 ShowLanguageDialog=no
 VersionInfoCompany=Doena Soft.
-VersionInfoCopyright=2013 - 2020
+VersionInfoCopyright=2013 - 2022
 VersionInfoDescription=Compare DVD Profiler Databases Setup
 VersionInfoVersion=2.0.0.2
 UninstallDisplayIcon={app}\djdsoft.ico
@@ -36,26 +35,26 @@ Name: "full"; Description: "Full installation"
 
 [Files]
 Source: "djdsoft.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DVDProfilerHelper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DVDProfilerHelper.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DVDProfilerXML.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DVDProfilerXML.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "CompareDatabases.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "CompareDatabases.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "CompareDatabasesLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "CompareDatabasesLib.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Microsoft.WindowsAPICodePack.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Microsoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ToolBox.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ToolBox.pdb"; DestDir: "{app}"; Flags: ignoreversion
 
-Source: "..\..\..\..\CompareDatabasesPlugin\bin\x86\CompareDatabasesPlugin\CompareDatabasesPlugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\..\..\CompareDatabasesPlugin\bin\x86\CompareDatabasesPlugin\CompareDatabasesPlugin.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\..\..\CompareDatabasesPlugin\bin\x86\CompareDatabasesPlugin\de\CompareDatabasesPlugin.resources.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.DVDProfilerHelper.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.DVDProfilerXML.dll"; DestDir: "{app}"; Flags: ignoreversion
 
-Source: "de\DVDProfilerHelper.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
-Source: "de\CompareDatabases.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
-Source: "de\CompareDatabasesLib.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
+Source: "DoenaSoft.CompareDatabases.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.CompareDatabases.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.CompareDatabases.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.CompareDatabases.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.WindowsAPICodePack.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.ToolBox.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DoenaSoft.ToolBox.pdb"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "..\..\..\..\CompareDatabasesPlugin\bin\x86\CompareDatabasesPlugin\DoenaSoft.CompareDatabases.Plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\..\..\CompareDatabasesPlugin\bin\x86\CompareDatabasesPlugin\DoenaSoft.CompareDatabases.Plugin.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\..\..\CompareDatabasesPlugin\bin\x86\CompareDatabasesPlugin\de\DoenaSoft.CompareDatabases.Plugin.resources.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "de\DoenaSoft.DVDProfilerHelper.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
+Source: "de\DoenaSoft.CompareDatabases.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
+Source: "de\DoenaSoft.CompareDatabasesLib.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
 
 Source: "ReadMe\readme.html"; DestDir: "{app}\ReadMe"; Flags: ignoreversion
 
@@ -66,12 +65,12 @@ Name: "{group}\Compare DVD Profiler Databases"; Filename: "{app}\CompareDatabase
 Name: "{userdesktop}\Compare DVD Profiler Databases"; Filename: "{app}\CompareDatabases.exe"; WorkingDir: "{app}"; IconFilename: "{app}\djdsoft.ico"
 
 [Run]
-Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/codebase ""{app}\CompareDatabasesPlugin.dll"""; Flags: runhidden
+Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/codebase ""{app}\DoenaSoft.CompareDatabases.Plugin.dll"""; Flags: runhidden
 
 ;[UninstallDelete]
 
 [UninstallRun]
-Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/u ""{app}\CompareDatabasesPlugin.dll"""; Flags: runhidden
+Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/u ""{app}\DoenaSoft.CompareDatabases.Plugin.dll"""; Flags: runhidden
 
 [Registry]
 ; Register - Cleanup ahead of time in case the user didn't uninstall the previous version.

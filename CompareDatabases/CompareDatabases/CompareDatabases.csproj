@@ -12,6 +12,8 @@
     <AssemblyName>CompareDatabases</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -56,14 +58,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DVDProfilerXML\DVDProfilerHelper\DVDProfilerHelper\DVDProfilerHelper.csproj">
-      <Project>{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}</Project>
-      <Name>DVDProfilerHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ToolBox\ToolBox\ToolBox.csproj">
-      <Project>{4782e10e-b5cc-4c2d-9d7f-d132cb5a50a0}</Project>
-      <Name>ToolBox</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CompareDatabasesLibrary\CompareDatabasesLibrary.csproj">
       <Project>{4FEF59D6-7EE7-4BDF-974D-8FEFF15EE5B4}</Project>
       <Name>CompareDatabasesLibrary</Name>
@@ -72,9 +66,18 @@
   <ItemGroup>
     <Content Include="DJDSOFT.ICO" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DoenaSoft.DVDProfilerHelper">
+      <Version>2.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="DoenaSoft.ToolBox">
+      <Version>1.0.7</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"%25ProgramFiles%25\Inno Setup 6\iscc.exe"  ..\..\..\..\CompareDatabasesSetup\Setup.iss</PostBuildEvent>
+    <PostBuildEvent>copy /y ..\..\..\djdsoft.ico .
+"%25ProgramFiles(x86)%25\Inno Setup 6\iscc.exe"  ..\..\..\..\CompareDatabasesSetup\Setup.iss</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

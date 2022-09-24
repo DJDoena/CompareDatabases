@@ -9,9 +9,11 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DoenaSoft.DVDProfiler.CompareDatabases</RootNamespace>
-    <AssemblyName>CompareDatabasesPlugin</AssemblyName>
+    <AssemblyName>DoenaSoft.CompareDatabases.Plugin</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -60,10 +62,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DVDProfilerXML\DVDProfilerHelper\DVDProfilerHelper\DVDProfilerHelper.csproj">
-      <Project>{461DACCA-8EBF-4C03-AD1A-C438E4EB3B36}</Project>
-      <Name>DVDProfilerHelper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CompareDatabasesLibrary\CompareDatabasesLibrary.csproj">
       <Project>{4FEF59D6-7EE7-4BDF-974D-8FEFF15EE5B4}</Project>
       <Name>CompareDatabasesLibrary</Name>
@@ -90,6 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CompareDatabasesPlugin.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DoenaSoft.DVDProfilerHelper">
+      <Version>2.2.9</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
