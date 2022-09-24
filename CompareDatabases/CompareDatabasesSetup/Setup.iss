@@ -1,7 +1,7 @@
 [Setup]
 AppName=Compare DVD Profiler Databases
 AppId=CompareDatabases
-AppVerName=Compare DVD Profiler Databases 2.0.0.2
+AppVerName=Compare DVD Profiler Databases 2.0.0.3
 AppCopyright=Copyright © Doena Soft. 2013 - 2022
 AppPublisher=Doena Soft.
 AppPublisherURL=http://doena-journal.net/en/dvd-profiler-tools/
@@ -21,7 +21,7 @@ ShowLanguageDialog=no
 VersionInfoCompany=Doena Soft.
 VersionInfoCopyright=2013 - 2022
 VersionInfoDescription=Compare DVD Profiler Databases Setup
-VersionInfoVersion=2.0.0.2
+VersionInfoVersion=2.0.0.3
 UninstallDisplayIcon={app}\djdsoft.ico
 
 [Languages]
