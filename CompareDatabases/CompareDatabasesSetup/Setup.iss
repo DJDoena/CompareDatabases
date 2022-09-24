@@ -73,16 +73,16 @@ Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe"; Parameters: "/u
 
 [Registry]
 ; Register - Cleanup ahead of time in case the user didn't uninstall the previous version.
-Root: HKCR; Subkey: "CLSID\{{01CD7B58-DD10-47D7-B15A-899431CF5157}"; Flags: dontcreatekey deletekey
+Root: HKCR; Subkey: "CLSID\{{6FB8CBB1-02C9-4A73-9204-0135D90E6AFF}"; Flags: dontcreatekey deletekey
 Root: HKCR; Subkey: "DoenaSoft.DVDProfiler.CompareDatabases.Plugin"; Flags: dontcreatekey deletekey
-Root: HKCU; Subkey: "Software\Invelos Software\DVD Profiler\Plugins\Identified"; ValueType: none; ValueName: "{{01CD7B58-DD10-47D7-B15A-899431CF5157}"; ValueData: "0"; Flags: deletevalue
-Root: HKLM; Subkey: "Software\Classes\CLSID\{{01CD7B58-DD10-47D7-B15A-899431CF5157}"; Flags: dontcreatekey deletekey
+Root: HKCU; Subkey: "Software\Invelos Software\DVD Profiler\Plugins\Identified"; ValueType: none; ValueName: "{{6FB8CBB1-02C9-4A73-9204-0135D90E6AFF}"; ValueData: "0"; Flags: deletevalue
+Root: HKLM; Subkey: "Software\Classes\CLSID\{{6FB8CBB1-02C9-4A73-9204-0135D90E6AFF}"; Flags: dontcreatekey deletekey
 Root: HKLM; Subkey: "Software\Classes\DoenaSoft.DVDProfiler.CompareDatabases.Plugin"; Flags: dontcreatekey deletekey
 ; Unregister
-Root: HKCR; Subkey: "CLSID\{{01CD7B58-DD10-47D7-B15A-899431CF5157}"; Flags: dontcreatekey uninsdeletekey
+Root: HKCR; Subkey: "CLSID\{{6FB8CBB1-02C9-4A73-9204-0135D90E6AFF}"; Flags: dontcreatekey uninsdeletekey
 Root: HKCR; Subkey: "DoenaSoft.DVDProfiler.CompareDatabases.Plugin"; Flags: dontcreatekey uninsdeletekey
-Root: HKCU; Subkey: "Software\Invelos Software\DVD Profiler\Plugins\Identified"; ValueType: none; ValueName: "{{01CD7B58-DD10-47D7-B15A-899431CF5157}"; ValueData: "0"; Flags: uninsdeletevalue
-Root: HKLM; Subkey: "Software\Classes\CLSID\{{01CD7B58-DD10-47D7-B15A-899431CF5157}"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "Software\Invelos Software\DVD Profiler\Plugins\Identified"; ValueType: none; ValueName: "{{6FB8CBB1-02C9-4A73-9204-0135D90E6AFF}"; ValueData: "0"; Flags: uninsdeletevalue
+Root: HKLM; Subkey: "Software\Classes\CLSID\{{6FB8CBB1-02C9-4A73-9204-0135D90E6AFF}"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "Software\Classes\DoenaSoft.DVDProfiler.CompareDatabases.Plugin"; Flags: dontcreatekey uninsdeletekey
 
 [Code]

@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper;
 using Invelos.DVDProfilerPlugin;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
     [ComVisible(true)]
-    [Guid("01CD7B58-DD10-47D7-B15A-899431CF5157")]
+    [Guid("6FB8CBB1-02C9-4A73-9204-0135D90E6AFF")]
     public class Plugin : IDVDProfilerPlugin, IDVDProfilerPluginInfo
     {
         private IDVDProfilerAPI Api;
@@ -29,6 +29,8 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         public Plugin()
         {
+            Debugger.Launch();
+
             this.ApplicationPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Doena Soft\CompareDatabases\";
             this.SettingsFile = this.ApplicationPath + "CompareDatabasesPluginSettings.xml";
             this.ErrorFile = Environment.GetEnvironmentVariable("TEMP") + @"\CompareDatabasesPluginCrash.xml";
@@ -36,19 +38,21 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         #region IDVDProfilerPlugin Members
         public void Load(IDVDProfilerAPI api)
-        {            
+        {
+            Debugger.Launch();
+
             this.Api = api;
-            if(Directory.Exists(this.ApplicationPath) == false)
+            if (Directory.Exists(this.ApplicationPath) == false)
             {
                 Directory.CreateDirectory(this.ApplicationPath);
             }
-            if(File.Exists(this.SettingsFile))
+            if (File.Exists(this.SettingsFile))
             {
                 try
                 {
                     Settings = DVDProfilerSerializer<Settings>.Deserialize(SettingsFile);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(String.Format(MessageBoxTexts.FileCantBeRead, this.SettingsFile, ex.Message)
                         , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -66,7 +70,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             {
                 DVDProfilerSerializer<Settings>.Serialize(SettingsFile, Settings);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(String.Format(MessageBoxTexts.FileCantBeWritten, this.SettingsFile, ex.Message)
                     , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -76,7 +80,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         public void HandleEvent(Int32 EventType, Object EventData)
         {
-            if(EventType == PluginConstants.EVENTID_CustomMenuClick)
+            if (EventType == PluginConstants.EVENTID_CustomMenuClick)
             {
                 this.HandleMenuClick((Int32)EventData);
             }
@@ -84,44 +88,17 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         #endregion
 
         #region IDVDProfilerPluginInfo Members
-        public String GetName()
-        {
-            //if(Settings.DefaultValues.UiCulture!=0)
-            //{
-            //    return (Texts.ResourceManager.GetString("PluginName", CultureInfo.GetCultureInfo(Settings.DefaultValues.UiCulture)));
-            //}
-            return (Texts.PluginName);
-        }
+        public string GetName() => Texts.PluginName;
 
-        public String GetDescription()
-        {
-            //if(Settings.DefaultValues.UiCulture != 0)
-            //{
-            //    return (Texts.ResourceManager.GetString("PluginDescription", CultureInfo.GetCultureInfo(Settings.DefaultValues.UiCulture)));
-            //}
-            return (Texts.PluginDescription);
-        }
+        public string GetDescription() => Texts.PluginDescription;
 
-        public String GetAuthorName()
-        {
-            return ("Doena Soft.");
-        }
+        public string GetAuthorName() => "Doena Soft.";
 
-        public String GetAuthorWebsite()
-        {
-            //if(Settings.DefaultValues.UiCulture != 0)
-            //{
-            //    return (Texts.ResourceManager.GetString("PluginUrl", CultureInfo.GetCultureInfo(Settings.DefaultValues.UiCulture)));
-            //}
-            return (Texts.PluginUrl);
-        }
+        public string GetAuthorWebsite() => Texts.PluginUrl;
 
-        public Int32 GetPluginAPIVersion()
-        {
-            return (PluginConstants.API_VERSION);
-        }
+        public int GetPluginAPIVersion() => PluginConstants.API_VERSION;
 
-        public Int32 GetVersionMajor()
+        public int GetVersionMajor()
         {
             Version version;
 
@@ -129,7 +106,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             return (version.Major);
         }
 
-        public Int32 GetVersionMinor()
+        public int GetVersionMinor()
         {
             Version version;
 
@@ -138,18 +115,18 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         }
         #endregion
 
-        private void HandleMenuClick(Int32 MenuEventID)
+        private void HandleMenuClick(int MenuEventID)
         {
-            if(MenuEventID == MenuId)
+            if (MenuEventID == MenuId)
             {
                 try
                 {
-                    using(MainForm mainForm = new MainForm(Settings, this.Api))
+                    using (MainForm mainForm = new MainForm(Settings, this.Api))
                     {
                         mainForm.ShowDialog();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     try
                     {
@@ -157,7 +134,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                         MessageBox.Show(String.Format(MessageBoxTexts.CriticalError, ex.Message, this.ErrorFile)
                             , MessageBoxTexts.CriticalErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                        if(File.Exists(this.ErrorFile))
+                        if (File.Exists(this.ErrorFile))
                         {
                             File.Delete(ErrorFile);
                         }
@@ -165,7 +142,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                         DVDProfilerSerializer<ExceptionXml>.Serialize(ErrorFile, exceptionXml);
                     }
-                    catch(Exception inEx)
+                    catch (Exception inEx)
                     {
                         MessageBox.Show(String.Format(MessageBoxTexts.FileCantBeWritten, this.ErrorFile, inEx.Message), MessageBoxTexts.ErrorHeader
                             , MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -176,19 +153,19 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         private static void CreateSettings()
         {
-            if(Settings == null)
+            if (Settings == null)
             {
                 Settings = new Settings();
             }
-            if(Settings.MainForm == null)
+            if (Settings.MainForm == null)
             {
                 Settings.MainForm = new SizableForm();
             }
-            if(Settings.DetailsForm ==null)
+            if (Settings.DetailsForm == null)
             {
                 Settings.DetailsForm = new BaseForm();
             }
-            if(Settings.DefaultValues == null)
+            if (Settings.DefaultValues == null)
             {
                 Settings.DefaultValues = new DefaultValues();
             }
@@ -205,7 +182,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         public static void RegisterServer(Type t)
         {
             CategoryRegistrar.ICatRegister cr = (CategoryRegistrar.ICatRegister)new StdComponentCategoriesMgr();
-            Guid clsidThis = new Guid("01CD7B58-DD10-47D7-B15A-899431CF5157");
+            Guid clsidThis = new Guid("6FB8CBB1-02C9-4A73-9204-0135D90E6AFF");
             Guid catid = new Guid("833F4274-5632-41DB-8FC5-BF3041CEA3F1");
 
             cr.RegisterClassImplCategories(ref clsidThis, 1,
@@ -216,7 +193,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         public static void UnregisterServer(Type t)
         {
             CategoryRegistrar.ICatRegister cr = (CategoryRegistrar.ICatRegister)new StdComponentCategoriesMgr();
-            Guid clsidThis = new Guid("01CD7B58-DD10-47D7-B15A-899431CF5157");
+            Guid clsidThis = new Guid("6FB8CBB1-02C9-4A73-9204-0135D90E6AFF");
             Guid catid = new Guid("833F4274-5632-41DB-8FC5-BF3041CEA3F1");
 
             cr.UnRegisterClassImplCategories(ref clsidThis, 1,
