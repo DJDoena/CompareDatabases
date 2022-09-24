@@ -10,7 +10,7 @@ using Invelos.DVDProfilerPlugin;
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
     [ComVisible(true)]
-    [Guid("6FB8CBB1-02C9-4A73-9204-0135D90E6AFF")]
+    [Guid("01CD7B58-DD10-47D7-B15A-899431CF5157")]
     public class Plugin : IDVDProfilerPlugin, IDVDProfilerPluginInfo
     {
         private IDVDProfilerAPI Api;
@@ -182,7 +182,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         public static void RegisterServer(Type t)
         {
             CategoryRegistrar.ICatRegister cr = (CategoryRegistrar.ICatRegister)new StdComponentCategoriesMgr();
-            Guid clsidThis = new Guid("6FB8CBB1-02C9-4A73-9204-0135D90E6AFF");
+            Guid clsidThis = new Guid("01CD7B58-DD10-47D7-B15A-899431CF5157");
             Guid catid = new Guid("833F4274-5632-41DB-8FC5-BF3041CEA3F1");
 
             cr.RegisterClassImplCategories(ref clsidThis, 1,
@@ -193,7 +193,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         public static void UnregisterServer(Type t)
         {
             CategoryRegistrar.ICatRegister cr = (CategoryRegistrar.ICatRegister)new StdComponentCategoriesMgr();
-            Guid clsidThis = new Guid("6FB8CBB1-02C9-4A73-9204-0135D90E6AFF");
+            Guid clsidThis = new Guid("01CD7B58-DD10-47D7-B15A-899431CF5157");
             Guid catid = new Guid("833F4274-5632-41DB-8FC5-BF3041CEA3F1");
 
             cr.UnRegisterClassImplCategories(ref clsidThis, 1,
