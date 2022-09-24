@@ -29,7 +29,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         public Plugin()
         {
-            Debugger.Launch();
+            //Debugger.Launch();
 
             this.ApplicationPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Doena Soft\CompareDatabases\";
             this.SettingsFile = this.ApplicationPath + "CompareDatabasesPluginSettings.xml";
@@ -39,7 +39,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         #region IDVDProfilerPlugin Members
         public void Load(IDVDProfilerAPI api)
         {
-            Debugger.Launch();
+            //Debugger.Launch();
 
             this.Api = api;
             if (Directory.Exists(this.ApplicationPath) == false)
