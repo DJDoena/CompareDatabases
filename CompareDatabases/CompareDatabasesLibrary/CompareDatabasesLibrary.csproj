@@ -10,10 +10,8 @@
 		<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<LangVersion>10.0</LangVersion>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>CompareDatabasesLibrary.snk</AssemblyOriginatorKeyFile>
-		<Title>CompareDatabases</Title>
 	</PropertyGroup>
 
 	<ItemGroup>
