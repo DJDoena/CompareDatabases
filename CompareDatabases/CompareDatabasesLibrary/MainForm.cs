@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper;
 using DoenaSoft.DVDProfiler.DVDProfilerXML.Version400;
+using DoenaSoft.ToolBox.Generics;
 using Invelos.DVDProfilerPlugin;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
@@ -15,9 +16,9 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
     //[System.Runtime.InteropServices.ComVisible(false)]
     public partial class MainForm : Form
     {
-        private Settings Settings;
+        private readonly Settings Settings;
 
-        private IDVDProfilerAPI Api;
+        private readonly IDVDProfilerAPI Api;
 
         private Boolean CanClose;
 
@@ -25,7 +26,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         private ProgressWindow ProgressWindow;
 
-        private Boolean SkipVersionCheck;
+        private readonly Boolean SkipVersionCheck;
 
         #region Delegates
         private delegate void ProgressBarDelegate();
@@ -37,55 +38,55 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         public MainForm(Settings settings, IDVDProfilerAPI api)
         {
-            this.SkipVersionCheck = false;
-            this.CanClose = true;
-            this.Settings = settings;
-            this.Api = api;
-            InitializeComponent();
-            this.LeftFileTextBox.Text = Texts.CurrentDatabase;
-            this.LeftFileButton.Enabled = false;
+            SkipVersionCheck = false;
+            CanClose = true;
+            Settings = settings;
+            Api = api;
+            this.InitializeComponent();
+            LeftFileTextBox.Text = Texts.CurrentDatabase;
+            LeftFileButton.Enabled = false;
         }
 
         public MainForm(Settings settings, Boolean skipVersionCheck)
         {
-            this.SkipVersionCheck = skipVersionCheck;
-            this.CanClose = true;
-            this.Settings = settings;
-            InitializeComponent();
+            SkipVersionCheck = skipVersionCheck;
+            CanClose = true;
+            Settings = settings;
+            this.InitializeComponent();
         }
 
         private void OnMainFormClosing(Object sender, FormClosingEventArgs e)
         {
-            if (this.CanClose == false)
+            if (CanClose == false)
             {
                 e.Cancel = true;
                 return;
             }
-            this.Settings.MainForm.Left = this.Left;
-            this.Settings.MainForm.Top = this.Top;
-            this.Settings.MainForm.Width = this.Width;
-            this.Settings.MainForm.Height = this.Height;
-            this.Settings.MainForm.WindowState = this.WindowState;
-            this.Settings.MainForm.RestoreBounds = this.RestoreBounds;
+            Settings.MainForm.Left = this.Left;
+            Settings.MainForm.Top = this.Top;
+            Settings.MainForm.Width = this.Width;
+            Settings.MainForm.Height = this.Height;
+            Settings.MainForm.WindowState = this.WindowState;
+            Settings.MainForm.RestoreBounds = this.RestoreBounds;
         }
 
         private void LayoutForm()
         {
-            if (this.Settings.MainForm.WindowState == FormWindowState.Normal)
+            if (Settings.MainForm.WindowState == FormWindowState.Normal)
             {
-                this.Left = this.Settings.MainForm.Left;
-                this.Top = this.Settings.MainForm.Top;
-                if (this.Settings.MainForm.Width > this.MinimumSize.Width)
+                this.Left = Settings.MainForm.Left;
+                this.Top = Settings.MainForm.Top;
+                if (Settings.MainForm.Width > this.MinimumSize.Width)
                 {
-                    this.Width = this.Settings.MainForm.Width;
+                    this.Width = Settings.MainForm.Width;
                 }
                 else
                 {
                     this.Width = this.MinimumSize.Width;
                 }
-                if (this.Settings.MainForm.Height > this.MinimumSize.Height)
+                if (Settings.MainForm.Height > this.MinimumSize.Height)
                 {
-                    this.Height = this.Settings.MainForm.Height;
+                    this.Height = Settings.MainForm.Height;
                 }
                 else
                 {
@@ -94,46 +95,46 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             }
             else
             {
-                this.Left = this.Settings.MainForm.RestoreBounds.X;
-                this.Top = this.Settings.MainForm.RestoreBounds.Y;
-                if (this.Settings.MainForm.RestoreBounds.Width > this.MinimumSize.Width)
+                this.Left = Settings.MainForm.RestoreBounds.X;
+                this.Top = Settings.MainForm.RestoreBounds.Y;
+                if (Settings.MainForm.RestoreBounds.Width > this.MinimumSize.Width)
                 {
-                    this.Width = this.Settings.MainForm.RestoreBounds.Width;
+                    this.Width = Settings.MainForm.RestoreBounds.Width;
                 }
                 else
                 {
                     this.Width = this.MinimumSize.Width;
                 }
-                if (this.Settings.MainForm.RestoreBounds.Height > this.MinimumSize.Height)
+                if (Settings.MainForm.RestoreBounds.Height > this.MinimumSize.Height)
                 {
-                    this.Height = this.Settings.MainForm.RestoreBounds.Height;
+                    this.Height = Settings.MainForm.RestoreBounds.Height;
                 }
                 else
                 {
                     this.Height = this.MinimumSize.Height;
                 }
             }
-            if (this.Settings.MainForm.WindowState != FormWindowState.Minimized)
+            if (Settings.MainForm.WindowState != FormWindowState.Minimized)
             {
-                this.WindowState = this.Settings.MainForm.WindowState;
+                this.WindowState = Settings.MainForm.WindowState;
             }
         }
 
         private void OnMainFormLoad(Object sender, EventArgs e)
         {
             this.LayoutForm();
-            this.WinMergeTextBox.Text = this.Settings.DefaultValues.WinMergePath;
+            WinMergeTextBox.Text = Settings.DefaultValues.WinMergePath;
             this.CheckForNewVersion(true);
         }
 
         private void OnLeftFileButtonClick(Object sender, EventArgs e)
         {
-            SelectCollectionFile(this.LeftFileTextBox);
+            SelectCollectionFile(LeftFileTextBox);
         }
 
         private void OnRightFileButtonClick(Object sender, EventArgs e)
         {
-            SelectCollectionFile(this.RightFileTextBox);
+            SelectCollectionFile(RightFileTextBox);
         }
 
         private static void SelectCollectionFile(TextBox textBox)
@@ -166,49 +167,49 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         private void OnCompareDatabasesButtonClick(Object sender, EventArgs e)
         {
-            if (this.Api == null)
+            if (Api == null)
             {
-                if (CheckFile(this.LeftFileTextBox.Text) == false)
+                if (CheckFile(LeftFileTextBox.Text) == false)
                 {
                     MessageBox.Show(this, MessageBoxTexts.InvalidLeftFileSelected
                         , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
-            if (CheckFile(this.RightFileTextBox.Text) == false)
+            if (CheckFile(RightFileTextBox.Text) == false)
             {
                 MessageBox.Show(this, MessageBoxTexts.InvalidRightFileSelected
                     , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (CheckFile(this.WinMergeTextBox.Text) == false)
+            if (CheckFile(WinMergeTextBox.Text) == false)
             {
                 MessageBox.Show(this, MessageBoxTexts.WinMergeMissingWarning
                  , MessageBoxTexts.WarningHeader, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            this.CanClose = false;
+            CanClose = false;
             this.UseWaitCursor = true;
             this.Cursor = Cursors.WaitCursor;
             this.Enabled = false;
-            if (this.Api != null)
+            if (Api != null)
             {
-                if (this.Collection == null)
+                if (Collection == null)
                 {
                     Thread thread;
                     Object[] allIds;
 
-                    this.ProgressWindow = new ProgressWindow();
-                    this.ProgressWindow.ProgressBar.Minimum = 0;
-                    this.ProgressWindow.ProgressBar.Step = 1;
-                    this.ProgressWindow.CanClose = false;
-                    allIds = (Object[])(this.Api.GetAllProfileIDs());
-                    this.ProgressWindow.ProgressBar.Maximum = allIds.Length;
-                    this.ProgressWindow.Show();
+                    ProgressWindow = new ProgressWindow();
+                    ProgressWindow.ProgressBar.Minimum = 0;
+                    ProgressWindow.ProgressBar.Step = 1;
+                    ProgressWindow.CanClose = false;
+                    allIds = (Object[])(Api.GetAllProfileIDs());
+                    ProgressWindow.ProgressBar.Maximum = allIds.Length;
+                    ProgressWindow.Show();
                     if (TaskbarManager.IsPlatformSupported)
                     {
                         TaskbarManager.Instance.OwnerHandle = this.Handle;
                         TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Normal);
-                        TaskbarManager.Instance.SetProgressValue(0, this.ProgressWindow.ProgressBar.Maximum);
+                        TaskbarManager.Instance.SetProgressValue(0, ProgressWindow.ProgressBar.Maximum);
                     }
                     thread = new Thread(new ParameterizedThreadStart(this.ThreadRun));
                     thread.IsBackground = false;
@@ -216,7 +217,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 }
                 else
                 {
-                    this.ThreadFinished(this.Collection);
+                    this.ThreadFinished(Collection);
                 }
             }
             else
@@ -225,12 +226,12 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 try
                 {
-                    leftCollection = DVDProfilerSerializer<Collection>.Deserialize(LeftFileTextBox.Text);
+                    leftCollection = XmlSerializer<Collection>.Deserialize(LeftFileTextBox.Text);
                 }
                 catch (Exception ex)
                 {
                     this.FinishCompare();
-                    MessageBox.Show(this, String.Format(MessageBoxTexts.FileCantBeRead, this.LeftFileTextBox.Text, ex.Message)
+                    MessageBox.Show(this, String.Format(MessageBoxTexts.FileCantBeRead, LeftFileTextBox.Text, ex.Message)
                         , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -259,24 +260,24 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
                 TaskbarManager.Instance.OwnerHandle = IntPtr.Zero;
             }
-            if (this.ProgressWindow != null)
+            if (ProgressWindow != null)
             {
-                this.ProgressWindow.CanClose = true;
-                this.ProgressWindow.Close();
-                this.ProgressWindow.Dispose();
-                this.ProgressWindow = null;
+                ProgressWindow.CanClose = true;
+                ProgressWindow.Close();
+                ProgressWindow.Dispose();
+                ProgressWindow = null;
             }
-            this.DuplicateListView.Items.Clear();
-            this.OnlyLeftiesListView.Items.Clear();
-            this.OnlyRightiesListView.Items.Clear();
+            DuplicateListView.Items.Clear();
+            OnlyLeftiesListView.Items.Clear();
+            OnlyRightiesListView.Items.Clear();
             try
             {
-                rightCollection = DVDProfilerSerializer<Collection>.Deserialize(RightFileTextBox.Text);
+                rightCollection = XmlSerializer<Collection>.Deserialize(RightFileTextBox.Text);
             }
             catch (Exception ex)
             {
                 this.FinishCompare();
-                MessageBox.Show(this, String.Format(MessageBoxTexts.FileCantBeRead, this.RightFileTextBox.Text, ex.Message)
+                MessageBox.Show(this, String.Format(MessageBoxTexts.FileCantBeRead, RightFileTextBox.Text, ex.Message)
                     , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -302,11 +303,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                     if (fullListLeft.TryGetValue(rightDvd.ID, out leftDvd))
                     {
-                        String leftInfo = DVDProfilerSerializer<DVD>.ToString(leftDvd, DVD.DefaultEncoding);
+                        String leftInfo = XmlSerializer<DVD>.ToString(leftDvd, DVD.DefaultEncoding);
 
                         leftInfo = leftInfo.Replace("\r\n", "\n");
 
-                        String rightInfo = DVDProfilerSerializer<DVD>.ToString(rightDvd, DVD.DefaultEncoding);
+                        String rightInfo = XmlSerializer<DVD>.ToString(rightDvd, DVD.DefaultEncoding);
 
                         rightInfo = rightInfo.Replace("\r\n", "\n");
 
@@ -336,7 +337,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 item = new ListViewItem(new String[] { kvp.Value[0].SortTitle, kvp.Value[0].Title, kvp.Value[0].UPC, kvp.Value[0].ID_LocalityDesc });
                 item.Tag = kvp;
-                this.DuplicateListView.Items.Add(item);
+                DuplicateListView.Items.Add(item);
             }
             foreach (KeyValuePair<String, DVD> kvp in fullListLeft)
             {
@@ -346,7 +347,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 item = new ListViewItem(new String[] { kvp.Value.SortTitle, kvp.Value.Title, kvp.Value.UPC, kvp.Value.ID_LocalityDesc });
                 temp = CreateTempDvd();
                 item.Tag = new KeyValuePair<String, DVD[]>(kvp.Key, new DVD[] { kvp.Value, temp });
-                this.OnlyLeftiesListView.Items.Add(item);
+                OnlyLeftiesListView.Items.Add(item);
             }
             foreach (KeyValuePair<String, DVD> kvp in onlyRighties)
             {
@@ -356,7 +357,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 item = new ListViewItem(new String[] { kvp.Value.SortTitle, kvp.Value.Title, kvp.Value.UPC, kvp.Value.ID_LocalityDesc });
                 temp = CreateTempDvd();
                 item.Tag = new KeyValuePair<String, DVD[]>(kvp.Key, new DVD[] { temp, kvp.Value });
-                this.OnlyRightiesListView.Items.Add(item);
+                OnlyRightiesListView.Items.Add(item);
             }
             this.FinishCompare();
             MessageBox.Show(this, MessageBoxTexts.Done, MessageBoxTexts.InformationHeader, MessageBoxButtons.OK
@@ -381,7 +382,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             this.Enabled = true;
             this.Cursor = Cursors.Default;
             this.UseWaitCursor = false;
-            this.CanClose = true;
+            CanClose = true;
         }
 
         private void ThreadRun(Object param)
@@ -398,13 +399,13 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 dvdList = new List<DVD>(allIds.Length);
                 for (Int32 i = 0; i < allIds.Length; i++)
                 {
-                    String xml = (String)(Invoke(new GetProfileDataDelegate(GetProfileData), allIds[i]));
+                    String xml = (String)(this.Invoke(new GetProfileDataDelegate(this.GetProfileData), allIds[i]));
 
-                    DVD dvd = DVDProfilerSerializer<DVD>.FromString(xml, DVD.DefaultEncoding);
+                    DVD dvd = XmlSerializer<DVD>.FromString(xml, DVD.DefaultEncoding);
 
                     dvdList.Add(dvd);
 
-                    Invoke(new ProgressBarDelegate(UpdateProgressBar));
+                    this.Invoke(new ProgressBarDelegate(this.UpdateProgressBar));
                 }
                 collection = new Collection();
                 collection.DVDList = dvdList.ToArray();
@@ -415,17 +416,17 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             }
             finally
             {
-                this.Collection = collection;
+                Collection = collection;
                 this.Invoke(new ThreadFinishedDelegate(this.ThreadFinished), collection);
             }
         }
 
         private void UpdateProgressBar()
         {
-            this.ProgressWindow.ProgressBar.PerformStep();
+            ProgressWindow.ProgressBar.PerformStep();
             if (TaskbarManager.IsPlatformSupported)
             {
-                TaskbarManager.Instance.SetProgressValue(this.ProgressWindow.ProgressBar.Value, this.ProgressWindow.ProgressBar.Maximum);
+                TaskbarManager.Instance.SetProgressValue(ProgressWindow.ProgressBar.Value, ProgressWindow.ProgressBar.Maximum);
             }
         }
 
@@ -434,7 +435,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             IDVDInfo dvdInfo;
             String xml;
 
-            this.Api.DVDByProfileID(out dvdInfo, id, -1, -1);
+            Api.DVDByProfileID(out dvdInfo, id, -1, -1);
             xml = dvdInfo.GetXML(true);
             return (xml);
         }
@@ -449,11 +450,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 ofd.RestoreDirectory = true;
                 ofd.Title = "Select the WinMerge executable.";
                 ofd.InitialDirectory
-                    = (new FileInfo(Environment.ExpandEnvironmentVariables(this.WinMergeTextBox.Text))).DirectoryName;
+                    = (new FileInfo(Environment.ExpandEnvironmentVariables(WinMergeTextBox.Text))).DirectoryName;
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    this.WinMergeTextBox.Text = ofd.FileName;
-                    this.Settings.DefaultValues.WinMergePath = this.WinMergeTextBox.Text;
+                    WinMergeTextBox.Text = ofd.FileName;
+                    Settings.DefaultValues.WinMergePath = WinMergeTextBox.Text;
                 }
             }
         }
@@ -470,7 +471,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 selectedIndex = listView.SelectedIndices[0];
                 kvp = (KeyValuePair<String, DVD[]>)(listView.Items[selectedIndex].Tag);
-                using (DetailsForm detailsForm = new DetailsForm(kvp.Value[0], kvp.Value[1], this.Settings))
+                using (DetailsForm detailsForm = new DetailsForm(kvp.Value[0], kvp.Value[1], Settings))
                 {
                     detailsForm.ShowDialog();
                 }
@@ -515,7 +516,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             OnlineAccess.Init("Doena Soft.", "CompareDatabases");
             if (silently)
             {
-                if (this.SkipVersionCheck == false)
+                if (SkipVersionCheck == false)
                 {
                     OnlineAccess.CheckForNewVersion("http://doena-soft.de/dvdprofiler/3.9.0/versions.xml", this, "CompareDatabases"
                         , this.GetType().Assembly, silently);
@@ -530,17 +531,17 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         private void OnExportDifferentProfilesFlagSetToolStripMenuItemClick(Object sender, EventArgs e)
         {
-            ExportFlagSet(DuplicateListView, "DifferentProfiles");
+            this.ExportFlagSet(DuplicateListView, "DifferentProfiles");
         }
 
         private void OnExportProfilesOnlyInLeftDatabaseFlagSetToolStripMenuItemClick(Object sender, EventArgs e)
         {
-            ExportFlagSet(OnlyLeftiesListView, "LeftOnlyProfiles");
+            this.ExportFlagSet(OnlyLeftiesListView, "LeftOnlyProfiles");
         }
 
         private void OnExportProfilesOnlyInRightDatabaseFlagSetToolStripMenuItemClick(Object sender, EventArgs e)
         {
-            ExportFlagSet(OnlyRightiesListView, "RightOnlyProfiles");
+            this.ExportFlagSet(OnlyRightiesListView, "RightOnlyProfiles");
         }
 
         private void ExportFlagSet(ListView listView

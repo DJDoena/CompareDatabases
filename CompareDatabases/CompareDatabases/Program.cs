@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using DoenaSoft.DVDProfiler.DVDProfilerHelper;
-using System.Globalization;
+using DoenaSoft.ToolBox.Generics;
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
@@ -11,9 +12,9 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
     {
         private static Settings Settings;
 
-        private static String SettingsFile;
+        private static readonly String SettingsFile;
 
-        private static WindowHandle WindowHandle;
+        private static readonly WindowHandle WindowHandle;
 
         static Program()
         {
@@ -32,11 +33,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         /// The main entry point for the application.
         /// </summary>
         [STAThread()]
-        static void Main(String[] args)
+        private static void Main(String[] args)
         {
             Boolean skipVersionCheck;
 
-            skipVersionCheck  =false;
+            skipVersionCheck = false;
             if ((args != null) && (args.Length > 0))
             {
                 foreach (String argIterator in args)
@@ -70,7 +71,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             {
                 try
                 {
-                    Settings = DVDProfilerSerializer<Settings>.Deserialize(SettingsFile);
+                    Settings = XmlSerializer<Settings>.Deserialize(SettingsFile);
                 }
                 catch (Exception ex)
                 {
@@ -84,9 +85,9 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             Application.Run(new MainForm(Settings, skipVersionCheck));
             try
             {
-                DVDProfilerSerializer<Settings>.Serialize(SettingsFile, Settings);
+                XmlSerializer<Settings>.Serialize(SettingsFile, Settings);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(WindowHandle, String.Format(MessageBoxTexts.FileCantBeWritten, SettingsFile, ex.Message)
                     , MessageBoxTexts.ErrorHeader, MessageBoxButtons.OK, MessageBoxIcon.Error);

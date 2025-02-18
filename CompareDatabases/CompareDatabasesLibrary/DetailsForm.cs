@@ -8,30 +8,30 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using DateTimePickerWithBackColor;
-using DoenaSoft.DVDProfiler.DVDProfilerHelper;
 using DoenaSoft.DVDProfiler.DVDProfilerXML.Version400;
+using DoenaSoft.ToolBox.Generics;
 
 namespace DoenaSoft.DVDProfiler.CompareDatabases
 {
     //[System.Runtime.InteropServices.ComVisible(false)]
     public partial class DetailsForm : Form
     {
-        private DVD m_LeftDvd;
+        private readonly DVD m_LeftDvd;
 
-        private DVD m_RightDvd;
+        private readonly DVD m_RightDvd;
 
         private static XmlSerializer s_MyLinksSerializer;
 
         private static XmlSerializer s_BoxSetSerializer;
 
-        private Settings m_Settings;
+        private readonly Settings m_Settings;
 
         private Settings Settings
         {
             [DebuggerStepThrough()]
             get
             {
-                return (this.m_Settings);
+                return (m_Settings);
             }
         }
 
@@ -66,16 +66,16 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
             Boolean leftIsNewer;
             DateTime newestLeftTimeStamp;
 
-            this.m_Settings = settings;
-            InitializeComponent();
+            m_Settings = settings;
+            this.InitializeComponent();
             ci = CultureInfo.CurrentCulture;
             format = ci.DateTimeFormat.ShortDatePattern + "\t" + ci.DateTimeFormat.LongTimePattern;
-            this.LeftProfileTimestampPicker.CustomFormat = format;
-            this.LeftLastEditedPicker.CustomFormat = format;
-            this.RightProfileTimestampPicker.CustomFormat = format;
-            this.RightLastEditedPicker.CustomFormat = format;
-            this.m_LeftDvd = leftDvd;
-            this.m_RightDvd = rightDvd;
+            LeftProfileTimestampPicker.CustomFormat = format;
+            LeftLastEditedPicker.CustomFormat = format;
+            RightProfileTimestampPicker.CustomFormat = format;
+            RightLastEditedPicker.CustomFormat = format;
+            m_LeftDvd = leftDvd;
+            m_RightDvd = rightDvd;
             newestLeftTimeStamp = leftDvd.ProfileTimestamp;
             if (leftDvd.LastEdited > newestLeftTimeStamp)
             {
@@ -88,95 +88,95 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                 leftIsNewer = false;
             }
 
-            this.LeftUpcTextBox.Text = leftDvd.UPC;
-            this.RightUpcTextBox.Text = rightDvd.UPC;
+            LeftUpcTextBox.Text = leftDvd.UPC;
+            RightUpcTextBox.Text = rightDvd.UPC;
 
-            this.LeftTitleTextBox.Text = leftDvd.Title;
-            this.RightTitleTextBox.Text = rightDvd.Title;
-            ColourizeTextBox(leftIsNewer, this.LeftTitleTextBox, this.RightTitleTextBox);
+            LeftTitleTextBox.Text = leftDvd.Title;
+            RightTitleTextBox.Text = rightDvd.Title;
+            ColourizeTextBox(leftIsNewer, LeftTitleTextBox, RightTitleTextBox);
 
-            this.LeftEditionTextBox.Text = leftDvd.Edition;
-            this.RightEditionTextBox.Text = rightDvd.Edition;
-            ColourizeTextBox(leftIsNewer, this.LeftEditionTextBox, this.RightEditionTextBox);
+            LeftEditionTextBox.Text = leftDvd.Edition;
+            RightEditionTextBox.Text = rightDvd.Edition;
+            ColourizeTextBox(leftIsNewer, LeftEditionTextBox, RightEditionTextBox);
 
-            this.LeftOriginalTitleTextBox.Text = leftDvd.OriginalTitle;
-            this.RightOriginalTitleTextBox.Text = rightDvd.OriginalTitle;
-            ColourizeTextBox(leftIsNewer, this.LeftOriginalTitleTextBox, this.RightOriginalTitleTextBox);
+            LeftOriginalTitleTextBox.Text = leftDvd.OriginalTitle;
+            RightOriginalTitleTextBox.Text = rightDvd.OriginalTitle;
+            ColourizeTextBox(leftIsNewer, LeftOriginalTitleTextBox, RightOriginalTitleTextBox);
 
-            this.LeftLocalityTextBox.Text = leftDvd.ID_LocalityDesc;
-            this.RightLocalityTextBox.Text = rightDvd.ID_LocalityDesc;
+            LeftLocalityTextBox.Text = leftDvd.ID_LocalityDesc;
+            RightLocalityTextBox.Text = rightDvd.ID_LocalityDesc;
 
-            this.LeftProfileTimestampPicker.Value = leftDvd.ProfileTimestamp;
-            this.RightProfileTimestampPicker.Value = rightDvd.ProfileTimestamp;
-            ColourizePicker(leftIsNewer, this.LeftProfileTimestampPicker, this.RightProfileTimestampPicker);
+            LeftProfileTimestampPicker.Value = leftDvd.ProfileTimestamp;
+            RightProfileTimestampPicker.Value = rightDvd.ProfileTimestamp;
+            ColourizePicker(leftIsNewer, LeftProfileTimestampPicker, RightProfileTimestampPicker);
 
             if (leftDvd.LastEditedSpecified)
             {
-                this.LeftLastEditedPicker.Value = leftDvd.LastEdited;
+                LeftLastEditedPicker.Value = leftDvd.LastEdited;
             }
             else
             {
-                this.LeftLastEditedPicker.Value = this.LeftLastEditedPicker.MinDate;
+                LeftLastEditedPicker.Value = LeftLastEditedPicker.MinDate;
             }
             if (rightDvd.LastEditedSpecified)
             {
-                this.RightLastEditedPicker.Value = rightDvd.LastEdited;
+                RightLastEditedPicker.Value = rightDvd.LastEdited;
             }
             else
             {
-                this.RightLastEditedPicker.Value = this.LeftLastEditedPicker.MinDate;
+                RightLastEditedPicker.Value = LeftLastEditedPicker.MinDate;
             }
-            ColourizePicker(leftIsNewer, this.LeftLastEditedPicker, this.RightLastEditedPicker);
+            ColourizePicker(leftIsNewer, LeftLastEditedPicker, RightLastEditedPicker);
 
             if ((leftDvd.PurchaseInfo != null) && (leftDvd.PurchaseInfo.DateSpecified))
             {
-                this.LeftPurchaseDatePicker.Value = leftDvd.PurchaseInfo.Date;
+                LeftPurchaseDatePicker.Value = leftDvd.PurchaseInfo.Date;
             }
             else
             {
-                this.LeftPurchaseDatePicker.Value = this.LeftLastEditedPicker.MinDate;
+                LeftPurchaseDatePicker.Value = LeftLastEditedPicker.MinDate;
             }
             if ((rightDvd.PurchaseInfo != null) && (rightDvd.PurchaseInfo.DateSpecified))
             {
-                this.RightPurchaseDatePicker.Value = rightDvd.PurchaseInfo.Date;
+                RightPurchaseDatePicker.Value = rightDvd.PurchaseInfo.Date;
             }
             else
             {
-                this.RightPurchaseDatePicker.Value = this.LeftLastEditedPicker.MinDate;
+                RightPurchaseDatePicker.Value = LeftLastEditedPicker.MinDate;
             }
-            ColourizePicker(leftIsNewer, this.LeftPurchaseDatePicker, this.RightPurchaseDatePicker);
+            ColourizePicker(leftIsNewer, LeftPurchaseDatePicker, RightPurchaseDatePicker);
 
             if (leftDvd.PurchaseInfo != null)
             {
-                this.LeftPurchasePlaceTextBox.Text = leftDvd.PurchaseInfo.Place;
+                LeftPurchasePlaceTextBox.Text = leftDvd.PurchaseInfo.Place;
             }
             if (rightDvd.PurchaseInfo != null)
             {
-                this.RightPurchasePlaceTextBox.Text = rightDvd.PurchaseInfo.Place;
+                RightPurchasePlaceTextBox.Text = rightDvd.PurchaseInfo.Place;
             }
-            ColourizeTextBox(leftIsNewer, this.LeftPurchasePlaceTextBox, this.RightPurchasePlaceTextBox);
+            ColourizeTextBox(leftIsNewer, LeftPurchasePlaceTextBox, RightPurchasePlaceTextBox);
 
             if ((leftDvd.PurchaseInfo != null) && (leftDvd.PurchaseInfo.Price != null))
             {
-                this.LeftPurchasePriceTextBox.Text = leftDvd.PurchaseInfo.Price.FormattedValue;
+                LeftPurchasePriceTextBox.Text = leftDvd.PurchaseInfo.Price.FormattedValue;
             }
             if ((rightDvd.PurchaseInfo != null) && (rightDvd.PurchaseInfo.Price != null))
             {
-                this.RightPurchasePriceTextBox.Text = rightDvd.PurchaseInfo.Price.FormattedValue;
+                RightPurchasePriceTextBox.Text = rightDvd.PurchaseInfo.Price.FormattedValue;
             }
-            ColourizeTextBox(leftIsNewer, this.LeftPurchasePriceTextBox, this.RightPurchasePriceTextBox);
+            ColourizeTextBox(leftIsNewer, LeftPurchasePriceTextBox, RightPurchasePriceTextBox);
 
-            FillCastTextBox(leftIsNewer, leftDvd.CastList, rightDvd.CastList, this.LeftCastTextBox, this.RightCastTextBox);
+            FillCastTextBox(leftIsNewer, leftDvd.CastList, rightDvd.CastList, LeftCastTextBox, RightCastTextBox);
 
-            FillCrewTextBox(leftIsNewer, leftDvd.CrewList, rightDvd.CrewList, this.LeftCrewTextBox, this.RightCrewTextBox);
+            FillCrewTextBox(leftIsNewer, leftDvd.CrewList, rightDvd.CrewList, LeftCrewTextBox, RightCrewTextBox);
 
-            FillEventsTextBox(leftIsNewer, leftDvd, rightDvd, this.LeftEventsTextBox, this.RightEventsTextBox);
+            this.FillEventsTextBox(leftIsNewer, leftDvd, rightDvd, LeftEventsTextBox, RightEventsTextBox);
 
-            FillTagsTextBox(leftIsNewer, leftDvd, rightDvd, this.LeftTagsTextBox, this.RightTagsTextBox);
+            this.FillTagsTextBox(leftIsNewer, leftDvd, rightDvd, LeftTagsTextBox, RightTagsTextBox);
 
-            FillMyLinksTextBox(leftIsNewer, leftDvd, rightDvd, this.LeftMyLinksTextBox, this.RightMyLinksTextBox);
+            this.FillMyLinksTextBox(leftIsNewer, leftDvd, rightDvd, LeftMyLinksTextBox, RightMyLinksTextBox);
 
-            FillBoxSetTextBox(leftIsNewer, leftDvd, rightDvd, this.LeftBoxSetTextBox, this.RightBoxSetTextBox);
+            this.FillBoxSetTextBox(leftIsNewer, leftDvd, rightDvd, LeftBoxSetTextBox, RightBoxSetTextBox);
         }
 
         private void FillBoxSetTextBox(Boolean leftIsNewer, DVD leftDvd, DVD rightDvd, TextBox leftTextBox, TextBox rightTextBox)
@@ -225,8 +225,8 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
                     rightBoxSetContentsLength = rightBoxSetContents.Length;
                 }
             }
-            WriteBoxSetEntry(leftBoxSetParentCount, leftBoxSetContentsLength, leftTextBox);
-            WriteBoxSetEntry(rightBoxSetParentCount, rightBoxSetContentsLength, rightTextBox);
+            this.WriteBoxSetEntry(leftBoxSetParentCount, leftBoxSetContentsLength, leftTextBox);
+            this.WriteBoxSetEntry(rightBoxSetParentCount, rightBoxSetContentsLength, rightTextBox);
             ColourizeTextBox(leftIsNewer, leftTextBox, rightTextBox);
             if ((leftBoxSetParentCount == rightBoxSetParentCount) && (leftBoxSetContentsLength == rightBoxSetContentsLength))
             {
@@ -318,11 +318,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 tags.TagList = leftDvd.TagList;
 
-                String leftTags = DVDProfilerSerializer<Tags>.ToString(tags);
+                String leftTags = XmlSerializer<Tags>.ToString(tags);
 
                 tags.TagList = rightDvd.TagList;
 
-                String rightTags = DVDProfilerSerializer<Tags>.ToString(tags);
+                String rightTags = XmlSerializer<Tags>.ToString(tags);
 
                 CheckListSpecific(leftIsNewer, leftTags, rightTags, leftTextBox, rightTextBox);
             }
@@ -336,11 +336,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 events.EventList = leftDvd.EventList;
 
-                String leftEvents = DVDProfilerSerializer<Events>.ToString(events);
+                String leftEvents = XmlSerializer<Events>.ToString(events);
 
                 events.EventList = rightDvd.EventList;
 
-                String rightEvents = DVDProfilerSerializer<Events>.ToString(events);
+                String rightEvents = XmlSerializer<Events>.ToString(events);
 
                 CheckListSpecific(leftIsNewer, leftEvents, rightEvents, leftTextBox, rightTextBox);
             }
@@ -354,11 +354,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 ci.CrewList = leftList;
 
-                String leftInfo = DVDProfilerSerializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
+                String leftInfo = XmlSerializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
 
                 ci.CrewList = rightList;
 
-                String rightInfo = DVDProfilerSerializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
+                String rightInfo = XmlSerializer<CrewInformation>.ToString(ci, CrewInformation.DefaultEncoding);
 
                 CheckListSpecific(leftIsNewer, leftInfo, rightInfo, leftTextBox, rightTextBox);
             }
@@ -372,11 +372,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 ci.CastList = leftList;
 
-                String leftInfo = DVDProfilerSerializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
+                String leftInfo = XmlSerializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
 
                 ci.CastList = rightList;
 
-                String rightInfo = DVDProfilerSerializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
+                String rightInfo = XmlSerializer<CastInformation>.ToString(ci, CastInformation.DefaultEncoding);
 
                 CheckListSpecific(leftIsNewer, leftInfo, rightInfo, leftTextBox, rightTextBox);
             }
@@ -491,15 +491,15 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 String leftFile;
                 String rightFile;
 
                 leftFile = Path.GetTempFileName();
-                this.m_LeftDvd.Serialize(leftFile);
+                m_LeftDvd.Serialize(leftFile);
                 rightFile = Path.GetTempFileName();
-                this.m_RightDvd.Serialize(rightFile);
+                m_RightDvd.Serialize(rightFile);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
         }
@@ -533,7 +533,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
         private void OnDetailsFormShown(Object sender, EventArgs e)
         {
-            this.WinMergeButton.Focus();
+            WinMergeButton.Focus();
         }
 
         private void OnCloseButtonClick(Object sender, EventArgs e)
@@ -545,7 +545,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 String leftFile;
                 String rightFile;
@@ -553,12 +553,12 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 ci = new CrewInformation();
                 leftFile = Path.GetTempFileName();
-                ci.Title = this.m_LeftDvd.Title;
-                ci.CrewList = this.m_LeftDvd.CrewList;
+                ci.Title = m_LeftDvd.Title;
+                ci.CrewList = m_LeftDvd.CrewList;
                 ci.Serialize(leftFile);
                 rightFile = Path.GetTempFileName();
-                ci.Title = this.m_RightDvd.Title;
-                ci.CrewList = this.m_RightDvd.CrewList;
+                ci.Title = m_RightDvd.Title;
+                ci.CrewList = m_RightDvd.CrewList;
                 ci.Serialize(rightFile);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
@@ -568,7 +568,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 String leftFile;
                 String rightFile;
@@ -576,11 +576,11 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 events = new Events();
                 leftFile = Path.GetTempFileName();
-                events.EventList = this.m_LeftDvd.EventList;
-                DVDProfilerSerializer<Events>.Serialize(leftFile, events);
+                events.EventList = m_LeftDvd.EventList;
+                XmlSerializer<Events>.Serialize(leftFile, events);
                 rightFile = Path.GetTempFileName();
-                events.EventList = this.m_RightDvd.EventList;
-                DVDProfilerSerializer<Events>.Serialize(rightFile, events);
+                events.EventList = m_RightDvd.EventList;
+                XmlSerializer<Events>.Serialize(rightFile, events);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
         }
@@ -589,7 +589,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 String leftFile;
                 String rightFile;
@@ -597,12 +597,12 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 ci = new CastInformation();
                 leftFile = Path.GetTempFileName();
-                ci.Title = this.m_LeftDvd.Title;
-                ci.CastList = this.m_LeftDvd.CastList;
+                ci.Title = m_LeftDvd.Title;
+                ci.CastList = m_LeftDvd.CastList;
                 ci.Serialize(leftFile);
                 rightFile = Path.GetTempFileName();
-                ci.Title = this.m_RightDvd.Title;
-                ci.CastList = this.m_RightDvd.CastList;
+                ci.Title = m_RightDvd.Title;
+                ci.CastList = m_RightDvd.CastList;
                 ci.Serialize(rightFile);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
@@ -612,7 +612,7 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 Tags tags = new Tags();
 
@@ -620,13 +620,13 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
 
                 tags.TagList = m_LeftDvd.TagList;
 
-                DVDProfilerSerializer<Tags>.Serialize(leftFile, tags);
+                XmlSerializer<Tags>.Serialize(leftFile, tags);
 
                 String rightFile = Path.GetTempFileName();
 
                 tags.TagList = m_RightDvd.TagList;
 
-                DVDProfilerSerializer<Tags>.Serialize(rightFile, tags);
+                XmlSerializer<Tags>.Serialize(rightFile, tags);
 
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
@@ -636,17 +636,17 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 String leftFile;
                 String rightFile;
                 MyLinks myLinks;
 
                 leftFile = Path.GetTempFileName();
-                myLinks = this.m_LeftDvd.MyLinks;
+                myLinks = m_LeftDvd.MyLinks;
                 SerializeMyLinks(leftFile, myLinks);
                 rightFile = Path.GetTempFileName();
-                myLinks = this.m_RightDvd.MyLinks;
+                myLinks = m_RightDvd.MyLinks;
                 SerializeMyLinks(rightFile, myLinks);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
@@ -668,17 +668,17 @@ namespace DoenaSoft.DVDProfiler.CompareDatabases
         {
             String fullPath;
 
-            if (CheckWinMergeExistence(out fullPath))
+            if (this.CheckWinMergeExistence(out fullPath))
             {
                 String leftFile;
                 String rightFile;
                 BoxSet boxSet;
 
                 leftFile = Path.GetTempFileName();
-                boxSet = this.m_LeftDvd.BoxSet;
+                boxSet = m_LeftDvd.BoxSet;
                 SerializeBoxSet(leftFile, boxSet);
                 rightFile = Path.GetTempFileName();
-                boxSet = this.m_RightDvd.BoxSet;
+                boxSet = m_RightDvd.BoxSet;
                 SerializeBoxSet(rightFile, boxSet);
                 StartWinMerge(fullPath, leftFile, rightFile);
             }
