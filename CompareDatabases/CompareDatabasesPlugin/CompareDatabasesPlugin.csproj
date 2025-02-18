@@ -8,11 +8,11 @@
 		<Platforms>x86</Platforms>
 		<UseWindowsForms>true</UseWindowsForms>
 		<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<LangVersion>10.0</LangVersion>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>CompareDatabasesPlugin.snk</AssemblyOriginatorKeyFile>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<EnableComHosting>true</EnableComHosting>
 	</PropertyGroup>
 
